@@ -1,116 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jignesh Phalsawal - Full Stack Developer, Music Enthusiast, and Tech Explorer. Portfolio showcasing web development projects, achievements, and technical expertise.">
-    <meta name="keywords" content="developer, portfolio, web development, music tech, Arduino, projects">
+    <meta name="description" content="Jignesh Phalsawal - Full Stack Developer, Music Enthusiast, and Hardware Creator. Explore high-performance web applications, hardware projects, and engineering achievements.">
+    <meta name="keywords" content="Jignesh Phalsawal, Full Stack Developer, Web Development, Arduino, Hardware, Portfolio, JavaScript, React, APIs, UI/UX">
     <meta name="author" content="Jignesh Phalsawal">
+    <meta name="theme-color" content="#0c1729">
 
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="Jignesh Phalsawal - Developer Portfolio">
-    <meta property="og:description" content="Explore my projects, skills, and achievements in web development and music technology.">
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jigneshphalsawal-cloud.github.io/">
+    <meta property="og:title" content="Jignesh Phalsawal — Developer & Tech Explorer">
+    <meta property="og:description" content="Explore my projects in web engineering, embedded systems, and audio technology.">
+    <meta property="og:image" content="a.png">
 
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Jignesh Phalsawal - Developer Portfolio">
-    <meta name="twitter:description" content="Full Stack Developer & Music Enthusiast">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Jignesh Phalsawal — Developer & Tech Explorer">
+    <meta property="twitter:description" content="Explore my projects in web engineering, embedded systems, and audio technology.">
+    <meta property="twitter:image" content="a.png">
 
-    <title>Jignesh Phalsawal | Developer, Music Enthusiast & Tech Explorer</title>
+    <title>Jignesh Phalsawal | Full Stack Developer & Hardware Enthusiast</title>
+
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Background Canvas & Micro-interaction Elements -->
+    <div id="scrollProgress" class="scroll-progress" aria-hidden="true"></div>
+    <div id="customCursor" class="custom-cursor" aria-hidden="true"></div>
     <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
 
-    <header>
+    <!-- Global Header -->
+    <header role="banner">
         <div class="header-top">
-            <h1>Jignesh Phalsawal</h1>
+            <a href="#" class="brand-logo" aria-label="Jignesh Phalsawal Homepage">
+                <span class="logo-bracket">&lt;</span>JP<span class="logo-bracket"> /&gt;</span>
+            </a>
+
             <nav aria-label="Main Navigation">
                 <a href="#introduction">About</a>
                 <a href="#skills">Skills</a>
                 <a href="#achievements">Achievements</a>
                 <a href="#projects">Projects</a>
+                <a href="#stats">Stats</a>
+                <a href="#terminal">Terminal</a>
+                <a href="#github-stats">GitHub</a>
                 <a href="#favorites">Favorites</a>
                 <a href="#contact">Contact</a>
             </nav>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙 Dark Mode</button>
+
+            <div class="header-actions">
+                <button class="palette-hint-btn" id="paletteHintBtn" aria-label="Open Command Palette (Cmd+K)" title="Press Cmd+K or Ctrl+K">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <span class="kbd-badge"><kbd>⌘</kbd><kbd>K</kbd></span>
+                </button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙 <span>Dark</span></button>
+            </div>
         </div>
     </header>
 
-    <!-- Command Palette -->
-    <div class="command-palette-overlay" id="commandPaletteOverlay"></div>
-    <div class="command-palette" id="commandPalette">
+    <!-- Command Palette Modal -->
+    <div class="command-palette-overlay" id="commandPaletteOverlay" tabindex="-1" aria-hidden="true"></div>
+    <div class="command-palette" id="commandPalette" role="dialog" aria-modal="true" aria-label="Command Palette">
         <div class="command-palette-content">
-            <input
-                type="text"
-                class="command-palette-input"
-                id="commandPaletteInput"
-                placeholder="Search projects, sections, or commands... (Cmd+K)"
-                aria-label="Command palette search"
-            >
-            <ul class="command-palette-results" id="commandPaletteResults"></ul>
+            <div class="command-palette-search-wrapper">
+                <i class="fas fa-terminal palette-search-icon" aria-hidden="true"></i>
+                <input
+                    type="text"
+                    class="command-palette-input"
+                    id="commandPaletteInput"
+                    placeholder="Type a command or search sections... (Cmd+K)"
+                    aria-label="Command palette query input"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+            </div>
+            <ul class="command-palette-results" id="commandPaletteResults" role="listbox"></ul>
             <div class="command-palette-footer">
-                <span>Press <kbd>Esc</kbd> to close</span>
+                <span class="palette-hint"><kbd>↑</kbd> <kbd>↓</kbd> to navigate</span>
+                <span class="palette-hint"><kbd>↵</kbd> to select</span>
+                <span class="palette-hint"><kbd>esc</kbd> to dismiss</span>
             </div>
         </div>
     </div>
 
+    <!-- Main Content Flow -->
     <main id="main-content">
         <!-- Hero Section -->
         <section class="hero" aria-label="Hero Section">
+            <div class="hero-badge">
+                <span class="status-indicator"></span> Available for engineering collaborations
+            </div>
             <div class="hero-content">
-                <h2>Developer • Music Enthusiast • Tech Explorer</h2>
-                <p>Building innovative projects at the intersection of technology and creativity</p>
-                <a href="#projects" class="cta-button">View My Work</a>
+                <h1 class="hero-title">
+                    Hi, I'm <span class="gradient-text">Jignesh Phalsawal</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Developer • Music Enthusiast • Tech Explorer
+                </p>
+                <p class="hero-description">
+                    Architecting elegant web applications, hardware interfaces, and audio systems with modern web standards and high-performance code.
+                </p>
+                <div class="hero-cta-group">
+                    <a href="#projects" class="cta-button primary">
+                        <span>Explore Projects</span>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <a href="#terminal" class="cta-button secondary">
+                        <i class="fas fa-terminal" aria-hidden="true"></i>
+                        <span>Launch Terminal</span>
+                    </a>
+                </div>
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="introduction" aria-labelledby="about-heading">
-            <h2 id="about-heading">About Me</h2>
-            <p>
-                Hi, I'm Jignesh Phalsawal. I'm passionate about technology, music, sports, and continuous learning.
-                I love building projects that combine creativity with technical problem-solving.
-            </p>
+        <section id="introduction" aria-labelledby="about-heading" class="section-container">
+            <div class="section-header">
+                <span class="section-tag">01. Overview</span>
+                <h2 id="about-heading">About Me</h2>
+            </div>
+            <div class="about-card glass-panel">
+                <p>
+                    I am a developer driven by a profound fascination for how digital systems and hardware interact with our everyday physical reality.
+                    From developing resilient space telemetry APIs to fabricating custom physical MIDI controllers with Arduino and DSP,
+                    I strive to bridge the gap between creative expression and computational rigor.
+                </p>
+                <p>
+                    Recognized as a <strong>State Topper</strong> in 2026 and an Olympiad medalist, I place high value on continuous technical growth,
+                    deep problem solving, and accessible, user-centric software design.
+                </p>
+            </div>
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" aria-labelledby="skills-heading">
-            <h2 id="skills-heading">Skills & Technologies</h2>
+        <section id="skills" aria-labelledby="skills-heading" class="section-container">
+            <div class="section-header">
+                <span class="section-tag">02. Stack</span>
+                <h2 id="skills-heading">Skills & Technologies</h2>
+            </div>
             <div class="skills-grid">
-                <div class="skill-card">
-                    <i class="fas fa-code" aria-hidden="true"></i>
-                    <h3>Frontend</h3>
-                    <p>HTML, CSS, JavaScript, React</p>
+                <div class="skill-card glass-panel">
+                    <div class="skill-icon-wrapper">
+                        <i class="fas fa-code" aria-hidden="true"></i>
+                    </div>
+                    <h3>Frontend Engineering</h3>
+                    <p>Modern ES6+ JavaScript, React, Responsive CSS3, HTML5 Semantic Architecture, UI/UX Systems.</p>
                 </div>
-                <div class="skill-card">
-                    <i class="fas fa-database" aria-hidden="true"></i>
-                    <h3>Backend</h3>
-                    <p>APIs, Node.js, Python</p>
+                <div class="skill-card glass-panel">
+                    <div class="skill-icon-wrapper">
+                        <i class="fas fa-server" aria-hidden="true"></i>
+                    </div>
+                    <h3>Backend & APIs</h3>
+                    <p>Node.js, Express, RESTful API Design, Python Scripting, JSON Schema, Asynchronous Data Pipelines.</p>
                 </div>
-                <div class="skill-card">
-                    <i class="fas fa-microchip" aria-hidden="true"></i>
-                    <h3>Hardware</h3>
-                    <p>Arduino, Embedded Systems</p>
+                <div class="skill-card glass-panel">
+                    <div class="skill-icon-wrapper">
+                        <i class="fas fa-microchip" aria-hidden="true"></i>
+                    </div>
+                    <h3>Hardware & Embedded</h3>
+                    <p>Arduino Microcontrollers, C/C++, Circuit Prototyping, Sensor Integration, Rotary Encoders.</p>
                 </div>
-                <div class="skill-card">
-                    <i class="fas fa-music" aria-hidden="true"></i>
-                    <h3>Music Tech</h3>
-                    <p>Audio Controllers, DSP</p>
+                <div class="skill-card glass-panel">
+                    <div class="skill-icon-wrapper">
+                        <i class="fas fa-sliders" aria-hidden="true"></i>
+                    </div>
+                    <h3>Audio & DSP Tech</h3>
+                    <p>Hardware Audio Controllers, Digital Signal Processing, Real-time MIDI Input/Output, Sound Design.</p>
                 </div>
             </div>
         </section>
 
-        <hr>
-
         <!-- Achievements Section -->
-        <section id="achievements" aria-labelledby="achievements-heading">
-            <h2 id="achievements-heading">Achievements & Recognition</h2>
+        <section id="achievements" aria-labelledby="achievements-heading" class="section-container">
+            <div class="section-header">
+                <span class="section-tag">03. Milestones</span>
+                <h2 id="achievements-heading">Achievements & Recognition</h2>
+            </div>
             <div class="achievements-grid">
-                <div class="achievement-card">
+                <div class="achievement-card glass-panel">
                     <div class="achievement-icon">
                         <i class="fas fa-medal" aria-hidden="true"></i>
                     </div>
@@ -118,7 +195,7 @@
                     <p>2nd Place in Science - 2019</p>
                     <span class="achievement-year">2019</span>
                 </div>
-                <div class="achievement-card">
+                <div class="achievement-card glass-panel">
                     <div class="achievement-icon">
                         <i class="fas fa-crown" aria-hidden="true"></i>
                     </div>
@@ -126,7 +203,7 @@
                     <p>3rd Rank Overall - 2022</p>
                     <span class="achievement-year">2022</span>
                 </div>
-                <div class="achievement-card">
+                <div class="achievement-card glass-panel">
                     <div class="achievement-icon">
                         <i class="fas fa-trophy" aria-hidden="true"></i>
                     </div>
@@ -134,7 +211,7 @@
                     <p>1st Place in Science - 2024</p>
                     <span class="achievement-year">2024</span>
                 </div>
-                <div class="achievement-card">
+                <div class="achievement-card glass-panel highlight">
                     <div class="achievement-icon">
                         <i class="fas fa-star" aria-hidden="true"></i>
                     </div>
@@ -145,55 +222,70 @@
             </div>
         </section>
 
-        <hr>
-
         <!-- Projects Section -->
-        <section id="projects" aria-labelledby="projects-heading">
-            <h2 id="projects-heading">My Projects</h2>
-            <div class="project-filters">
+        <section id="projects" aria-labelledby="projects-heading" class="section-container">
+            <div class="section-header">
+                <span class="section-tag">04. Portfolio</span>
+                <h2 id="projects-heading">Featured Projects</h2>
+            </div>
+            <div class="project-filters" role="group" aria-label="Project filter options">
                 <button class="filter-tag active" data-filter="all">All Projects</button>
-                <button class="filter-tag" data-filter="api">API</button>
-                <button class="filter-tag" data-filter="hardware">Hardware</button>
+                <button class="filter-tag" data-filter="api">API Platforms</button>
+                <button class="filter-tag" data-filter="hardware">Hardware & Embedded</button>
             </div>
             <div class="project-list">
-                <article class="card" data-category="api">
+                <!-- Astronav Project -->
+                <article class="card glass-panel" data-category="api">
                     <div class="card-header">
                         <h3>Astronav</h3>
-                        <span class="status completed"><i class="fas fa-check"></i> Completed</span>
+                        <span class="status completed"><i class="fas fa-check" aria-hidden="true"></i> Completed</span>
                     </div>
                     <div class="card-tags">
                         <span class="tag">API</span>
-                        <span class="tag">Space</span>
+                        <span class="tag">Space Data</span>
+                        <span class="tag">JavaScript</span>
                     </div>
-                    <p>An API-based platform that provides comprehensive space data in an accessible and user-friendly format. Perfect for space enthusiasts and researchers.</p>
-                    <img src="a.png" alt="Astronav project - Space data platform interface showing API integration">
+                    <p>An API-based space observation platform aggregating telemetry, orbital calculations, and celestial datasets into an intuitive user interface.</p>
+                    <div class="card-img-wrapper">
+                        <img src="a.png" alt="Astronav project screenshot displaying space telemetry dashboard" loading="lazy">
+                    </div>
                     <div class="card-footer">
-                        <a href="https://github.com/jigneshphalsawal-cloud/astronav" class="project-link" target="_blank" rel="noopener noreferrer">View Project <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        <a href="https://github.com/jigneshphalsawal-cloud/astronav" class="project-link" target="_blank" rel="noopener noreferrer">
+                            <span>View Source Code</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
                     </div>
                 </article>
-                <article class="card" data-category="hardware">
+
+                <!-- Music Controller Project -->
+                <article class="card glass-panel" data-category="hardware">
                     <div class="card-header">
                         <h3>Music Controller</h3>
-                        <span class="status in-progress"><i class="fas fa-hourglass" aria-hidden="true"></i> In Progress</span>
+                        <span class="status in-progress"><i class="fas fa-hourglass-half" aria-hidden="true"></i> In Active Dev</span>
                     </div>
                     <div class="card-tags">
                         <span class="tag">Hardware</span>
                         <span class="tag">Arduino</span>
+                        <span class="tag">DSP</span>
                     </div>
-                    <p>A custom hardware device featuring 3 control buttons, volume adjustment, and an integrated display for real-time feedback and music control.</p>
-                    <img src="p.png" alt="Music Controller project - Hardware device with control buttons and display">
+                    <p>A custom hardware audio console featuring 3 tactile control triggers, rotary volume potentiometer, and an OLED feedback display for music playback control.</p>
+                    <div class="card-img-wrapper">
+                        <img src="p.png" alt="Hardware music controller prototype with OLED display and rotary controls" loading="lazy">
+                    </div>
                     <div class="card-footer">
-                        <span class="in-progress-badge"><i class="fas fa-clock" aria-hidden="true"></i> Coming Soon</span>
+                        <span class="in-progress-badge">
+                            <i class="fas fa-wrench" aria-hidden="true"></i> Prototyping Phase
+                        </span>
                     </div>
                 </article>
             </div>
         </section>
 
-        <!-- Project Modal -->
+        <!-- Project Detail Modal -->
         <div class="modal-overlay" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-            <div class="project-modal">
+            <div class="project-modal glass-panel">
                 <button class="modal-close-btn" id="modalClose" aria-label="Close modal">
-                    <i class="fas fa-times"></i>
+                    <i class="fas fa-times" aria-hidden="true"></i>
                 </button>
                 <div class="modal-header">
                     <span class="modal-category-badge" id="modalCategory">API</span>
@@ -202,127 +294,206 @@
                 <div class="modal-image-container">
                     <img src="" alt="" class="modal-image" id="modalImage">
                 </div>
-                <p class="modal-description" id="modalDescription">Project description goes here.</p>
-                <h3 class="modal-section-title"><i class="fas fa-star"></i> Key Features</h3>
-                <ul class="modal-features-list" id="modalFeatures">
-                    <li><i class="fas fa-check"></i> Feature 1</li>
-                </ul>
-                <div class="modal-tags" id="modalTags">
-                    <span class="modal-tag">HTML</span>
-                </div>
+                <p class="modal-description" id="modalDescription">Detailed technical project breakdown and engineering specifics.</p>
                 <div class="modal-actions">
                     <a href="#" class="modal-btn-primary" id="modalGitHubLink" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-github"></i> View on GitHub
+                        <i class="fab fa-github" aria-hidden="true"></i> View on GitHub
                     </a>
                     <button class="modal-btn-secondary" id="modalCloseBtn">
-                        <i class="fas fa-times"></i> Close
+                        <i class="fas fa-times" aria-hidden="true"></i> Close
                     </button>
                 </div>
             </div>
         </div>
 
-        <hr>
-
-        <!-- Favorite Songs Section -->
-        <section id="favorites" aria-labelledby="favorites-heading">
-            <h2 id="favorites-heading">Favorite Songs</h2>
-            <div class="songs-grid">
-                <a href="https://open.spotify.com/search/Udarrian%20Statinder%20Sartaj" target="_blank" rel="noopener noreferrer" class="song-card">
-                    <div class="song-icon">
-                        <i class="fas fa-music" aria-hidden="true"></i>
-                    </div>
-                    <h3>Udarrian</h3>
-                    <p class="artist">Statinder Sartaj</p>
-                </a>
-                <a href="https://www.youtube.com/watch?v=8wsgLaGUW7s" target="_blank" rel="noopener noreferrer" class="song-card">
-                    <div class="song-icon">
-                        <i class="fas fa-music" aria-hidden="true"></i>
-                    </div>
-                    <h3>Highest in the Room</h3>
-                    <p class="artist">Remix</p>
-                </a>
-                <a href="https://open.spotify.com/search/Crepin%20Weekend" target="_blank" rel="noopener noreferrer" class="song-card">
-                    <div class="song-icon">
-                        <i class="fas fa-music" aria-hidden="true"></i>
-                    </div>
-                    <h3>Crepin</h3>
-                    <p class="artist">Weekend</p>
-                </a>
-                <a href="https://open.spotify.com/search/Attention%20Charlie%20Puth" target="_blank" rel="noopener noreferrer" class="song-card">
-                    <div class="song-icon">
-                        <i class="fas fa-music" aria-hidden="true"></i>
-                    </div>
-                    <h3>Attention</h3>
-                    <p class="artist">Charlie Puth</p>
-                </a>
-                <a href="https://open.spotify.com/search/Fearless%20NCS" target="_blank" rel="noopener noreferrer" class="song-card">
-                    <div class="song-icon">
-                        <i class="fas fa-music" aria-hidden="true"></i>
-                    </div>
-                    <h3>Fearless</h3>
-                    <p class="artist">NCS</p>
-                </a>
+        <!-- By The Numbers / Metrics Section -->
+        <section id="stats" aria-labelledby="stats-heading" class="section-container">
+            <div class="section-header">
+                <span class="section-tag">05. Metrics</span>
+                <h2 id="stats-heading">By The Numbers</h2>
             </div>
-        </section>
-
-        <hr>
-
-
-        <!-- Stats Section -->
-        <section id="stats" aria-labelledby="stats-heading">
-            <h2 id="stats-heading">By The Numbers</h2>
             <div class="stats-grid">
-                <div class="stat-card">
+                <div class="stat-card glass-panel">
                     <h3>4</h3>
-                    <p>Major Achievements</p>
+                    <p>Major Honors & Awards</p>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card glass-panel">
                     <h3>2+</h3>
-                    <p>Projects Built</p>
+                    <p>Active Open Repositories</p>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card glass-panel">
                     <h3>4</h3>
-                    <p>Tech Skills</p>
+                    <p>Core Engineering Disciplines</p>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card glass-panel highlight">
                     <h3>2026</h3>
-                    <p>State Topper</p>
+                    <p>State Topper Distinction</p>
                 </div>
             </div>
         </section>
 
-        <hr>
-
-        <!-- CTA Section -->
-        <section id="cta-section" aria-labelledby="cta-heading">
-            <h2 id="cta-heading">Let's Build Something Amazing</h2>
-            <p>Whether you need a developer for your next project, want to collaborate, or just want to chat about tech and music, I'm always open to new opportunities.</p>
-            <a href="#contact" class="cta-button-large">Get In Touch Now</a>
+        <!-- Interactive Developer Terminal Section -->
+        <section id="terminal" aria-labelledby="terminal-heading" class="section-container">
+            <div class="section-header">
+                <span class="section-tag">06. Shell</span>
+                <h2 id="terminal-heading">Interactive Terminal</h2>
+            </div>
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="terminal-title"><i class="fas fa-terminal" aria-hidden="true"></i> bash — 80x24</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-chips" role="toolbar" aria-label="Terminal quick commands">
+                        <button class="terminal-chip" data-command="help"><i class="fas fa-question-circle" aria-hidden="true"></i> help</button>
+                        <button class="terminal-chip" data-command="about"><i class="fas fa-user" aria-hidden="true"></i> about</button>
+                        <button class="terminal-chip" data-command="skills"><i class="fas fa-code" aria-hidden="true"></i> skills</button>
+                        <button class="terminal-chip" data-command="projects"><i class="fas fa-folder-open" aria-hidden="true"></i> projects</button>
+                        <button class="terminal-chip" data-command="theme"><i class="fas fa-palette" aria-hidden="true"></i> theme</button>
+                        <button class="terminal-chip" data-command="clear"><i class="fas fa-eraser" aria-hidden="true"></i> clear</button>
+                    </div>
+                    <div class="terminal-welcome-msg">
+                        <span class="t-accent">Welcome to Jignesh's Developer Shell v2.5.0</span><br>
+                        <span class="t-muted">Type <span class="t-prompt">help</span> or click quick commands to navigate.</span>
+                    </div>
+                    <div class="terminal-input-row">
+                        <span class="t-path">jignesh@portfolio:~$</span>
+                        <input type="text" id="terminalInput" autocomplete="off" spellcheck="false" placeholder="Type a command (e.g. help, skills)..." aria-label="Terminal command input">
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <hr>
+        <!-- GitHub Activity Section -->
+        <section id="github-stats" aria-labelledby="github-stats-heading" class="section-container">
+            <div class="section-header">
+                <span class="section-tag">07. Activity</span>
+                <h2 id="github-stats-heading">GitHub Live Activity</h2>
+            </div>
+            <div class="github-repos-grid" id="githubReposGrid">
+                <!-- Dynamically populated by GitHub API engine in script.js -->
+            </div>
+        </section>
+
+        <!-- Favorite Music Section -->
+        <section id="favorites" aria-labelledby="favorites-heading" class="section-container">
+            <div class="section-header">
+                <span class="section-tag">08. Audio</span>
+                <h2 id="favorites-heading">Curated Audio & Tracks</h2>
+            </div>
+            <div class="songs-grid">
+                <a href="https://open.spotify.com/search/Udarrian%20Statinder%20Sartaj" target="_blank" rel="noopener noreferrer" class="song-card glass-panel">
+                    <div class="song-icon">
+                        <i class="fas fa-music" aria-hidden="true"></i>
+                    </div>
+                    <div class="song-details">
+                        <h3>Udaarian</h3>
+                        <p class="artist">Satinder Sartaaj</p>
+                    </div>
+                    <i class="fas fa-external-link-alt song-external" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.youtube.com/watch?v=8wsgLaGUW7s" target="_blank" rel="noopener noreferrer" class="song-card glass-panel">
+                    <div class="song-icon">
+                        <i class="fas fa-music" aria-hidden="true"></i>
+                    </div>
+                    <div class="song-details">
+                        <h3>Highest in the Room</h3>
+                        <p class="artist">Travis Scott (Remix)</p>
+                    </div>
+                    <i class="fas fa-external-link-alt song-external" aria-hidden="true"></i>
+                </a>
+                <a href="https://open.spotify.com/search/Creepin%20The%20Weeknd" target="_blank" rel="noopener noreferrer" class="song-card glass-panel">
+                    <div class="song-icon">
+                        <i class="fas fa-music" aria-hidden="true"></i>
+                    </div>
+                    <div class="song-details">
+                        <h3>Creepin'</h3>
+                        <p class="artist">Metro Boomin, The Weeknd</p>
+                    </div>
+                    <i class="fas fa-external-link-alt song-external" aria-hidden="true"></i>
+                </a>
+                <a href="https://open.spotify.com/search/Attention%20Charlie%20Puth" target="_blank" rel="noopener noreferrer" class="song-card glass-panel">
+                    <div class="song-icon">
+                        <i class="fas fa-music" aria-hidden="true"></i>
+                    </div>
+                    <div class="song-details">
+                        <h3>Attention</h3>
+                        <p class="artist">Charlie Puth</p>
+                    </div>
+                    <i class="fas fa-external-link-alt song-external" aria-hidden="true"></i>
+                </a>
+                <a href="https://open.spotify.com/search/Fearless%20Lost%20Sky" target="_blank" rel="noopener noreferrer" class="song-card glass-panel">
+                    <div class="song-icon">
+                        <i class="fas fa-music" aria-hidden="true"></i>
+                    </div>
+                    <div class="song-details">
+                        <h3>Fearless</h3>
+                        <p class="artist">Lost Sky (NCS)</p>
+                    </div>
+                    <i class="fas fa-external-link-alt song-external" aria-hidden="true"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- CTA Collaboration Section -->
+        <section id="cta-section" aria-labelledby="cta-heading" class="section-container cta-block glass-panel">
+            <div class="cta-inner">
+                <h2 id="cta-heading">Let's Build Something Exceptional</h2>
+                <p>Have an ambitious web platform or hardware prototype in mind? Let's connect and turn ideas into high-impact reality.</p>
+                <a href="#contact" class="cta-button primary large">
+                    <span>Initiate Contact</span>
+                    <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
+                </a>
+            </div>
+        </section>
 
         <!-- Contact Section -->
-        <section id="contact" aria-labelledby="contact-heading">
-            <h2 id="contact-heading">Get In Touch</h2>
-            <p>Interested in collaborating or want to chat? Feel free to reach out!</p>
+        <section id="contact" aria-labelledby="contact-heading" class="section-container">
+            <div class="section-header">
+                <span class="section-tag">09. Connection</span>
+                <h2 id="contact-heading">Get In Touch</h2>
+            </div>
+            <p class="contact-subtext">Direct lines of communication and active developer profiles:</p>
             <address class="contact-links">
-                <a href="https://stardance.hackclub.com/@jigneshphalsawal" class="contact-link" target="_blank" rel="noopener noreferrer" aria-label="Visit Hack Club Profile">
-                    <i class="fas fa-user-circle" aria-hidden="true"></i> Hack Club Profile
+                <a href="mailto:jigneshphalsawal@gmail.com" class="contact-link glass-panel" aria-label="Send Email">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <div class="contact-text">
+                        <span class="contact-label">Email</span>
+                        <span class="contact-val">jigneshphalsawal@gmail.com</span>
+                    </div>
                 </a>
-                <a href="mailto:jigneshphalsawal@gmail.com" class="contact-link" aria-label="Send email">
-                    <i class="fas fa-envelope" aria-hidden="true"></i> Email
+                <a href="https://github.com/jigneshphalsawal-cloud" class="contact-link glass-panel" target="_blank" rel="noopener noreferrer" aria-label="Visit GitHub Profile">
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                    <div class="contact-text">
+                        <span class="contact-label">GitHub</span>
+                        <span class="contact-val">jigneshphalsawal-cloud</span>
+                    </div>
                 </a>
-                <a href="https://github.com/jigneshphalsawal-cloud" class="contact-link" target="_blank" rel="noopener noreferrer" aria-label="Visit GitHub Profile">
-                    <i class="fas fa-github" aria-hidden="true"></i> GitHub
+                <a href="https://stardance.hackclub.com/@jigneshphalsawal" class="contact-link glass-panel" target="_blank" rel="noopener noreferrer" aria-label="Visit Hack Club Profile">
+                    <i class="fas fa-globe" aria-hidden="true"></i>
+                    <div class="contact-text">
+                        <span class="contact-label">Hack Club</span>
+                        <span class="contact-val">@jigneshphalsawal</span>
+                    </div>
                 </a>
             </address>
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Site Footer -->
     <footer role="contentinfo">
-        <p>&copy; 2026 Jignesh Phalsawal. All rights reserved. | Crafted with <i class="fas fa-heart" aria-label="love"></i> and code</p>
+        <div class="footer-content">
+            <p>&copy; 2026 Jignesh Phalsawal. Engineered with precision, semantic standards, and vanilla JavaScript.</p>
+            <div class="footer-links">
+                <a href="#main-content">Back to Top</a>
+                <span>•</span>
+                <a href="https://github.com/jigneshphalsawal-cloud" target="_blank" rel="noopener noreferrer">Source Repos</a>
+            </div>
+        </div>
     </footer>
 
     <!-- Back to Top Button -->
@@ -330,306 +501,6 @@
         <i class="fas fa-arrow-up" aria-hidden="true"></i>
     </button>
 
-    
-
-    <script defer>
-        const CONFIG = {
-            SCROLL_THRESHOLD: 300,
-            HERO_HIDE_THRESHOLD: 100,
-            COMMAND_PALETTE_COMMANDS: [
-                { id: 'about', title: 'About', desc: 'Jump to About section', icon: '👤', href: '#introduction' },
-                { id: 'skills', title: 'Skills', desc: 'View my skills & tech stack', icon: '⚙️', href: '#skills' },
-                { id: 'achievements', title: 'Achievements', desc: 'My awards & recognition', icon: '🏆', href: '#achievements' },
-                { id: 'projects', title: 'Projects', desc: 'View my portfolio projects', icon: '💻', href: '#projects' },
-                { id: 'songs', title: 'Favorites', desc: 'My favorite songs', icon: '🎵', href: '#favorites' },
-                { id: 'contact', title: 'Contact', desc: 'Get in touch with me', icon: '💬', href: '#contact' },
-                { id: 'email', title: 'Copy Email', desc: 'Copy email to clipboard', icon: '📧', action: 'copyEmail' },
-                { id: 'github', title: 'GitHub Profile', desc: 'Open my GitHub', icon: '🐙', href: 'https://github.com/jigneshphalsawal-cloud' },
-            ]
-        };
-
-        function initThemeToggle() {
-            const themeToggle = document.getElementById('themeToggle');
-            const htmlElement = document.documentElement;
-
-            if (!themeToggle) return;
-
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            if (currentTheme === 'dark') {
-                htmlElement.classList.add('dark-mode');
-                themeToggle.textContent = '☀️ Light Mode';
-            }
-
-            themeToggle.addEventListener('click', function() {
-                htmlElement.classList.toggle('dark-mode');
-                const newTheme = htmlElement.classList.contains('dark-mode') ? 'dark' : 'light';
-                localStorage.setItem('theme', newTheme);
-                themeToggle.textContent = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
-            });
-        }
-
-        function initBackToTop() {
-            const backToTopButton = document.getElementById('backToTop');
-            if (!backToTopButton) return;
-
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > CONFIG.SCROLL_THRESHOLD) {
-                    backToTopButton.classList.add('show');
-                } else {
-                    backToTopButton.classList.remove('show');
-                }
-            }, { passive: true });
-
-            backToTopButton.addEventListener('click', function() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-
-        function initHeaderScroll() {
-            const header = document.querySelector('header');
-            if (!header) return;
-
-            let lastScrollTop = 0;
-
-            window.addEventListener('scroll', function() {
-                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-                if (currentScroll > CONFIG.HERO_HIDE_THRESHOLD) {
-                    if (currentScroll > lastScrollTop) {
-                        header.classList.add('hide');
-                    } else {
-                        header.classList.remove('hide');
-                    }
-                }
-
-                lastScrollTop = Math.max(0, currentScroll);
-            }, { passive: true });
-        }
-
-        function initProjectFilters() {
-            const filterTags = document.querySelectorAll('.filter-tag');
-            const cards = document.querySelectorAll('.card[data-category]');
-
-            filterTags.forEach(tag => {
-                tag.addEventListener('click', () => {
-                    filterTags.forEach(t => t.classList.remove('active'));
-                    tag.classList.add('active');
-
-                    const filter = tag.dataset.filter;
-                    cards.forEach(card => {
-                        if (filter === 'all' || card.dataset.category === filter) {
-                            card.style.display = '';
-                            setTimeout(() => card.classList.add('reveal-active'), 50);
-                        } else {
-                            card.style.display = 'none';
-                            card.classList.remove('reveal-active');
-                        }
-                    });
-                });
-            });
-        }
-
-        function initScrollReveal() {
-            const reveals = document.querySelectorAll('section, .card, .skill-card, .achievement-card, .song-card');
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('reveal-active');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-            reveals.forEach(el => {
-                el.classList.add('reveal');
-                observer.observe(el);
-            });
-        }
-
-        function initCommandPalette() {
-            const overlay = document.getElementById('commandPaletteOverlay');
-            const palette = document.getElementById('commandPalette');
-            const input = document.getElementById('commandPaletteInput');
-            const results = document.getElementById('commandPaletteResults');
-
-            if (!overlay || !palette || !input || !results) return;
-
-            function openPalette() {
-                overlay.classList.add('active');
-                palette.classList.add('active');
-                input.focus();
-            }
-
-            function closePalette() {
-                overlay.classList.remove('active');
-                palette.classList.remove('active');
-                input.value = '';
-                results.innerHTML = '';
-            }
-
-            function renderResults(query) {
-                results.innerHTML = '';
-                const filtered = CONFIG.COMMAND_PALETTE_COMMANDS.filter(cmd =>
-                    cmd.title.toLowerCase().includes(query.toLowerCase()) ||
-                    cmd.desc.toLowerCase().includes(query.toLowerCase())
-                );
-
-                if (filtered.length === 0) {
-                    results.innerHTML = '<li style="padding: 1rem; text-align: center; color: var(--text-light);">No results found</li>';
-                    return;
-                }
-
-                filtered.forEach(cmd => {
-                    const li = document.createElement('li');
-                    li.className = 'command-palette-item';
-                    li.innerHTML = `
-                        <span class="command-palette-item-icon">${cmd.icon}</span>
-                        <div class="command-palette-item-content">
-                            <div class="command-palette-item-title">${cmd.title}</div>
-                            <div class="command-palette-item-desc">${cmd.desc}</div>
-                        </div>
-                    `;
-                    li.addEventListener('click', () => executeCommand(cmd));
-                    results.appendChild(li);
-                });
-            }
-
-            function executeCommand(cmd) {
-                if (cmd.action === 'copyEmail') {
-                    navigator.clipboard.writeText('jigneshphalsawal@gmail.com');
-                    alert('Email copied to clipboard!');
-                } else if (cmd.href) {
-                    if (cmd.href.startsWith('http')) {
-                        window.open(cmd.href, '_blank');
-                    } else {
-                        document.querySelector(cmd.href).scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-                closePalette();
-            }
-
-            // Keyboard shortcuts
-            document.addEventListener('keydown', (e) => {
-                if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-                    e.preventDefault();
-                    palette.classList.contains('active') ? closePalette() : openPalette();
-                } else if (e.key === 'Escape') {
-                    closePalette();
-                }
-            });
-
-            input.addEventListener('input', (e) => renderResults(e.target.value));
-            overlay.addEventListener('click', closePalette);
-        }
-
-        function initParticleCanvas() {
-            const canvas = document.getElementById('particleCanvas');
-            if (!canvas) return;
-
-            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                return;
-            }
-
-            const ctx = canvas.getContext('2d');
-            let width = (canvas.width = window.innerWidth);
-            let height = (canvas.height = window.innerHeight);
-
-            let particles = [];
-            const particleCount = Math.min(Math.floor((width * height) / 25000), 50);
-
-            class Particle {
-                constructor() {
-                    this.reset();
-                }
-
-                reset() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.4;
-                    this.vy = (Math.random() - 0.5) * 0.4;
-                    this.radius = Math.random() * 1.8 + 0.8;
-                    this.alpha = Math.random() * 0.5 + 0.2;
-                }
-
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-
-                    if (this.x < 0 || this.x > width) this.vx *= -1;
-                    if (this.y < 0 || this.y > height) this.vy *= -1;
-                }
-
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(96, 165, 250, ${this.alpha})`;
-                    ctx.fill();
-                }
-            }
-
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-
-            let animationFrameId;
-            function animate() {
-                ctx.clearRect(0, 0, width, height);
-
-                // Draw connecting constellation lines
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist < 120) {
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(59, 130, 246, ${0.15 * (1 - dist / 120)})`;
-                            ctx.lineWidth = 0.8;
-                            ctx.stroke();
-                        }
-                    }
-                }
-
-                particles.forEach((p) => {
-                    p.update();
-                    p.draw();
-                });
-
-                animationFrameId = requestAnimationFrame(animate);
-            }
-
-            animate();
-
-            let resizeTimeout;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    width = canvas.width = window.innerWidth;
-                    height = canvas.height = window.innerHeight;
-                }, 150);
-            }, { passive: true });
-        }
-
-        function init() {
-            initThemeToggle();
-            initBackToTop();
-            initHeaderScroll();
-            initScrollReveal();
-            initCommandPalette();
-            initProjectFilters();
-            initParticleCanvas();
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
-    </script>
-
+    <script src="script.js" defer></script>
 </body>
 </html>
