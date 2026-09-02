@@ -3,25 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jignesh Phalsawal - Full Stack Developer, Music Enthusiast, and Hardware Creator. Explore high-performance web applications, hardware projects, and engineering achievements.">
-    <meta name="keywords" content="Jignesh Phalsawal, Full Stack Developer, Web Development, Arduino, Hardware, Portfolio, JavaScript, React, APIs, UI/UX">
+    <meta name="description" content="Jignesh Phalsawal - Developer, music producer, and hardware tinkerer.">
     <meta name="author" content="Jignesh Phalsawal">
     <meta name="theme-color" content="#0c1729">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://jigneshphalsawal-cloud.github.io/">
-    <meta property="og:title" content="Jignesh Phalsawal — Developer & Tech Explorer">
-    <meta property="og:description" content="Explore my projects in web engineering, embedded systems, and audio technology.">
-    <meta property="og:image" content="a.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Jignesh Phalsawal — Developer & Tech Explorer">
-    <meta property="twitter:description" content="Explore my projects in web engineering, embedded systems, and audio technology.">
-    <meta property="twitter:image" content="a.png">
-
-    <title>Jignesh Phalsawal | Full Stack Developer & Hardware Enthusiast</title>
+    <title>Jignesh Phalsawal</title>
 
     <!-- Google Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,7 +26,7 @@
     <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
 
     <!-- Global Header -->
-    <header role="banner">
+    <header role="banner" aria-label="Main navigation">
         <div class="header-top">
             <a href="#" class="brand-logo" aria-label="Jignesh Phalsawal Homepage">
                 <span class="logo-bracket">&lt;</span>JP<span class="logo-bracket"> /&gt;</span>
@@ -54,15 +40,11 @@
                 <a href="#stats">Stats</a>
                 <a href="#terminal">Terminal</a>
                 <a href="#github-stats">GitHub</a>
-                <a href="#favorites">Favorites</a>
+                <a href="#audio-lab">Audio Lab</a>
                 <a href="#contact">Contact</a>
             </nav>
 
             <div class="header-actions">
-                <button class="palette-hint-btn" id="paletteHintBtn" aria-label="Open Command Palette (Cmd+K)" title="Press Cmd+K or Ctrl+K">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                    <span class="kbd-badge"><kbd>⌘</kbd><kbd>K</kbd></span>
-                </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙 <span>Dark</span></button>
             </div>
         </div>
@@ -72,13 +54,13 @@
     <div class="command-palette-overlay" id="commandPaletteOverlay" tabindex="-1" aria-hidden="true"></div>
     <div class="command-palette" id="commandPalette" role="dialog" aria-modal="true" aria-label="Command Palette">
         <div class="command-palette-content">
-            <div class="command-palette-search-wrapper">
+            <div class="command-palette-search-wrapper" style="display:none;">
                 <i class="fas fa-terminal palette-search-icon" aria-hidden="true"></i>
                 <input
                     type="text"
                     class="command-palette-input"
                     id="commandPaletteInput"
-                    placeholder="Type a command or search sections... (Cmd+K)"
+                    placeholder="Type a command... (Cmd+K)"
                     aria-label="Command palette query input"
                     autocomplete="off"
                     spellcheck="false"
@@ -98,26 +80,26 @@
         <!-- Hero Section -->
         <section class="hero" aria-label="Hero Section">
             <div class="hero-badge">
-                <span class="status-indicator"></span> Available for engineering collaborations
+                <span class="status-indicator"></span> Open to collaborations
             </div>
             <div class="hero-content">
                 <h1 class="hero-title">
                     Hi, I'm <span class="gradient-text">Jignesh Phalsawal</span>
                 </h1>
                 <p class="hero-subtitle">
-                    Developer • Music Enthusiast • Tech Explorer
+                    Developer • Music Producer • Hardware Tinkerer
                 </p>
                 <p class="hero-description">
-                    Architecting elegant web applications, hardware interfaces, and audio systems with modern web standards and high-performance code.
+                    I build web apps, hardware projects, and audio tools. I like making things that work well and look good.
                 </p>
                 <div class="hero-cta-group">
                     <a href="#projects" class="cta-button primary">
-                        <span>Explore Projects</span>
+                        <span>View Projects</span>
                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                     <a href="#terminal" class="cta-button secondary">
                         <i class="fas fa-terminal" aria-hidden="true"></i>
-                        <span>Launch Terminal</span>
+                        <span>Open Terminal</span>
                     </a>
                 </div>
             </div>
@@ -131,13 +113,12 @@
             </div>
             <div class="about-card glass-panel">
                 <p>
-                    I am a developer driven by a profound fascination for how digital systems and hardware interact with our everyday physical reality.
-                    From developing resilient space telemetry APIs to fabricating custom physical MIDI controllers with Arduino and DSP,
-                    I strive to bridge the gap between creative expression and computational rigor.
+                    I'm a developer fascinated by how digital systems and hardware interact with the real world.
+                    From building space data tools to crafting physical MIDI controllers using Arduino and DSP,
+                    I love bringing ideas to life.
                 </p>
                 <p>
-                    Recognized as a <strong>State Topper</strong> in 2026 and an Olympiad medalist, I place high value on continuous technical growth,
-                    deep problem solving, and accessible, user-centric software design.
+                    Recognized as a <strong>State Topper</strong> in 2026 and an Olympiad medalist. I enjoy learning, solving problems, and building things that are easy for people to use.
                 </p>
             </div>
         </section>
@@ -145,37 +126,37 @@
         <!-- Skills Section -->
         <section id="skills" aria-labelledby="skills-heading" class="section-container">
             <div class="section-header">
-                <span class="section-tag">02. Stack</span>
-                <h2 id="skills-heading">Skills & Technologies</h2>
+                <span class="section-tag">02. Skills</span>
+                <h2 id="skills-heading">What I Do</h2>
             </div>
             <div class="skills-grid">
                 <div class="skill-card glass-panel">
                     <div class="skill-icon-wrapper">
                         <i class="fas fa-code" aria-hidden="true"></i>
                     </div>
-                    <h3>Frontend Engineering</h3>
-                    <p>Modern ES6+ JavaScript, React, Responsive CSS3, HTML5 Semantic Architecture, UI/UX Systems.</p>
-                </div>
-                <div class="skill-card glass-panel">
-                    <div class="skill-icon-wrapper">
-                        <i class="fas fa-server" aria-hidden="true"></i>
-                    </div>
-                    <h3>Backend & APIs</h3>
-                    <p>Node.js, Express, RESTful API Design, Python Scripting, JSON Schema, Asynchronous Data Pipelines.</p>
+                    <h3>Web</h3>
+                    <p>Building functional and clean websites.</p>
                 </div>
                 <div class="skill-card glass-panel">
                     <div class="skill-icon-wrapper">
                         <i class="fas fa-microchip" aria-hidden="true"></i>
                     </div>
-                    <h3>Hardware & Embedded</h3>
-                    <p>Arduino Microcontrollers, C/C++, Circuit Prototyping, Sensor Integration, Rotary Encoders.</p>
+                    <h3>Hardware</h3>
+                    <p>Arduino and embedded systems.</p>
                 </div>
                 <div class="skill-card glass-panel">
                     <div class="skill-icon-wrapper">
-                        <i class="fas fa-sliders" aria-hidden="true"></i>
+                        <i class="fas fa-music" aria-hidden="true"></i>
                     </div>
-                    <h3>Audio & DSP Tech</h3>
-                    <p>Hardware Audio Controllers, Digital Signal Processing, Real-time MIDI Input/Output, Sound Design.</p>
+                    <h3>Audio</h3>
+                    <p>Digital synthesis and audio tools.</p>
+                </div>
+                <div class="skill-card glass-panel">
+                    <div class="skill-icon-wrapper">
+                        <i class="fas fa-pen" aria-hidden="true"></i>
+                    </div>
+                    <h3>Tinkering</h3>
+                    <p>Learning, making, and fixing.</p>
                 </div>
             </div>
         </section>
@@ -245,7 +226,7 @@
                         <span class="tag">Space Data</span>
                         <span class="tag">JavaScript</span>
                     </div>
-                    <p>An API-based space observation platform aggregating telemetry, orbital calculations, and celestial datasets into an intuitive user interface.</p>
+                    <p>I built this space observation app to visualize satellite telemetry and orbital paths in a way that’s easy to follow.</p>
                     <div class="card-img-wrapper">
                         <img src="a.png" alt="Astronav project screenshot displaying space telemetry dashboard" loading="lazy">
                     </div>
@@ -268,14 +249,15 @@
                         <span class="tag">Arduino</span>
                         <span class="tag">DSP</span>
                     </div>
-                    <p>A custom hardware audio console featuring 3 tactile control triggers, rotary volume potentiometer, and an OLED feedback display for music playback control.</p>
+                    <p>A custom hardware audio console with 3 physical triggers, a rotary knob, and an OLED display for controlling music.</p>
                     <div class="card-img-wrapper">
                         <img src="p.png" alt="Hardware music controller prototype with OLED display and rotary controls" loading="lazy">
                     </div>
                     <div class="card-footer">
-                        <span class="in-progress-badge">
-                            <i class="fas fa-wrench" aria-hidden="true"></i> Prototyping Phase
-                        </span>
+                        <a href="https://github.com/jigneshphalsawal-cloud/music-controller" class="project-link" target="_blank" rel="noopener noreferrer">
+                            <span>View Source Code</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
                     </div>
                 </article>
             </div>
@@ -294,7 +276,7 @@
                 <div class="modal-image-container">
                     <img src="" alt="" class="modal-image" id="modalImage">
                 </div>
-                <p class="modal-description" id="modalDescription">Detailed technical project breakdown and engineering specifics.</p>
+                <p class="modal-description" id="modalDescription">Project overview and technical details.</p>
                 <div class="modal-actions">
                     <a href="#" class="modal-btn-primary" id="modalGitHubLink" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-github" aria-hidden="true"></i> View on GitHub
@@ -306,7 +288,7 @@
             </div>
         </div>
 
-        <!-- By The Numbers / Metrics Section -->
+        <!-- By The Numbers Section -->
         <section id="stats" aria-labelledby="stats-heading" class="section-container">
             <div class="section-header">
                 <span class="section-tag">05. Metrics</span>
@@ -315,19 +297,19 @@
             <div class="stats-grid">
                 <div class="stat-card glass-panel">
                     <h3>4</h3>
-                    <p>Major Honors & Awards</p>
+                    <p>Major Projects</p>
                 </div>
                 <div class="stat-card glass-panel">
                     <h3>2+</h3>
-                    <p>Active Open Repositories</p>
+                    <p>Open Repositories</p>
                 </div>
                 <div class="stat-card glass-panel">
                     <h3>4</h3>
-                    <p>Core Engineering Disciplines</p>
+                    <p>Fields I Work In</p>
                 </div>
                 <div class="stat-card glass-panel highlight">
                     <h3>2026</h3>
-                    <p>State Topper Distinction</p>
+                    <p>State Topper</p>
                 </div>
             </div>
         </section>
@@ -379,71 +361,149 @@
             </div>
         </section>
 
-        <!-- Favorite Music Section -->
-        <section id="favorites" aria-labelledby="favorites-heading" class="section-container">
+        <!-- Audio Lab / Frequency Canvas Section -->
+        <section id="audio-lab" aria-labelledby="audiolab-heading" class="section-container">
             <div class="section-header">
-                <span class="section-tag">08. Audio</span>
-                <h2 id="favorites-heading">Curated Audio & Tracks</h2>
+                <span class="section-tag">08. Audio Lab</span>
+                <h2 id="audiolab-heading">Frequency Canvas</h2>
             </div>
-            <div class="songs-grid">
-                <a href="https://open.spotify.com/search/Udarrian%20Statinder%20Sartaj" target="_blank" rel="noopener noreferrer" class="song-card glass-panel">
-                    <div class="song-icon">
-                        <i class="fas fa-music" aria-hidden="true"></i>
+
+            <div class="audio-lab-container glass-panel">
+                <div class="canvas-wrapper">
+                    <canvas id="vizCanvas" class="viz-canvas"></canvas>
+                </div>
+
+                <div class="audio-hud">
+                    <!-- Synthesizer Controls -->
+                    <div class="hud-group">
+                        <span class="hud-group-title"><i class="fas fa-sliders"></i> Master Synthesizer</span>
+                        <div class="hud-controls-grid">
+                            <div class="control-item">
+                                <label for="waveSelect">Oscillator Wave</label>
+                                <select id="waveSelect" class="hud-select">
+                                    <option value="sine">Sine (Pure)</option>
+                                    <option value="square">Square (8-Bit)</option>
+                                    <option value="sawtooth" selected>Sawtooth (Buzzy)</option>
+                                    <option value="triangle">Triangle (Warm)</option>
+                                </select>
+                            </div>
+                            <div class="control-item">
+                                <label for="freqSlider">Pitch / Frequency (<span id="freqVal">220</span> Hz)</label>
+                                <input type="range" id="freqSlider" min="55" max="880" value="220" class="hud-slider">
+                            </div>
+                            <div class="control-item">
+                                <label for="filterSlider">Filter Cutoff (<span id="filterVal">1200</span> Hz)</label>
+                                <input type="range" id="filterSlider" min="100" max="5000" value="1200" class="hud-slider">
+                            </div>
+                        </div>
                     </div>
-                    <div class="song-details">
-                        <h3>Udaarian</h3>
-                        <p class="artist">Satinder Sartaaj</p>
+
+                    <!-- Visualizer Controls & Recorder -->
+                    <div class="hud-group">
+                        <span class="hud-group-title"><i class="fas fa-wave-square"></i> Engine & Recording</span>
+                        <div class="hud-actions-row">
+                            <button id="btnPlaySynth" class="cta-button primary"><i class="fas fa-play"></i> Toggle Synth</button>
+                            <button id="btnToggleRecord" class="cta-button secondary record-btn"><i class="fas fa-circle"></i> <span>Start Rec</span></button>
+                            <a id="recordDownloadLink" class="cta-button secondary download-btn" style="display:none;" download="frequency-canvas.webm">
+                                <i class="fas fa-download"></i> Save Clip
+                            </a>
+                        </div>
+                        <div class="hud-volume-controls">
+                            <div class="control-item volume-item">
+                                <label for="synthVolume"><i class="fas fa-sliders-h"></i> Synth Volume</label>
+                                <input type="range" id="synthVolume" min="0" max="1" step="0.01" value="0.25" class="hud-slider">
+                            </div>
+                            <div class="control-item volume-item">
+                                <label for="musicVolume"><i class="fas fa-music"></i> Music Volume</label>
+                                <input type="range" id="musicVolume" min="0" max="1" step="0.01" value="0.9" class="hud-slider">
+                            </div>
+                        </div>
                     </div>
-                    <i class="fas fa-external-link-alt song-external" aria-hidden="true"></i>
-                </a>
-                <a href="https://www.youtube.com/watch?v=8wsgLaGUW7s" target="_blank" rel="noopener noreferrer" class="song-card glass-panel">
-                    <div class="song-icon">
-                        <i class="fas fa-music" aria-hidden="true"></i>
+                </div>
+
+                <!-- Beat Pad & Key Trigger Controls -->
+                <div class="beat-pad-section">
+                    <span class="hud-group-title"><i class="fas fa-th"></i> Interactive Trigger Pads (Keyboard 1-8)</span>
+                    <div class="beat-pad-grid">
+                        <button class="beat-pad" data-note="130.81"><span>C3</span><kbd>1</kbd></button>
+                        <button class="beat-pad" data-note="146.83"><span>D3</span><kbd>2</kbd></button>
+                        <button class="beat-pad" data-note="164.81"><span>E3</span><kbd>3</kbd></button>
+                        <button class="beat-pad" data-note="174.61"><span>F3</span><kbd>4</kbd></button>
+                        <button class="beat-pad" data-note="196.00"><span>G3</span><kbd>5</kbd></button>
+                        <button class="beat-pad" data-note="220.00"><span>A3</span><kbd>6</kbd></button>
+                        <button class="beat-pad" data-note="246.94"><span>B3</span><kbd>7</kbd></button>
+                        <button class="beat-pad" data-note="261.63"><span>C4</span><kbd>8</kbd></button>
                     </div>
-                    <div class="song-details">
-                        <h3>Highest in the Room</h3>
-                        <p class="artist">Travis Scott (Remix)</p>
-                    </div>
-                    <i class="fas fa-external-link-alt song-external" aria-hidden="true"></i>
-                </a>
-                <a href="https://open.spotify.com/search/Creepin%20The%20Weeknd" target="_blank" rel="noopener noreferrer" class="song-card glass-panel">
-                    <div class="song-icon">
-                        <i class="fas fa-music" aria-hidden="true"></i>
-                    </div>
-                    <div class="song-details">
-                        <h3>Creepin'</h3>
-                        <p class="artist">Metro Boomin, The Weeknd</p>
-                    </div>
-                    <i class="fas fa-external-link-alt song-external" aria-hidden="true"></i>
-                </a>
-                <a href="https://open.spotify.com/search/Attention%20Charlie%20Puth" target="_blank" rel="noopener noreferrer" class="song-card glass-panel">
-                    <div class="song-icon">
-                        <i class="fas fa-music" aria-hidden="true"></i>
-                    </div>
-                    <div class="song-details">
-                        <h3>Attention</h3>
-                        <p class="artist">Charlie Puth</p>
-                    </div>
-                    <i class="fas fa-external-link-alt song-external" aria-hidden="true"></i>
-                </a>
-                <a href="https://open.spotify.com/search/Fearless%20Lost%20Sky" target="_blank" rel="noopener noreferrer" class="song-card glass-panel">
-                    <div class="song-icon">
-                        <i class="fas fa-music" aria-hidden="true"></i>
-                    </div>
-                    <div class="song-details">
-                        <h3>Fearless</h3>
-                        <p class="artist">Lost Sky (NCS)</p>
-                    </div>
-                    <i class="fas fa-external-link-alt song-external" aria-hidden="true"></i>
-                </a>
+                </div>
             </div>
         </section>
+
+    <!-- My Beats Section -->
+    <section id="my-beats" aria-labelledby="beats-heading" class="section-container">
+        <div class="section-header">
+            <span class="section-tag">10. My Beats</span>
+            <h2 id="beats-heading">My Beats</h2>
+        </div>
+        <div class="songs-grid">
+            <!-- Beat Card 1 -->
+            <div class="song-card glass-panel" data-song="better">
+                <div class="song-icon"><i class="fas fa-music"></i></div>
+                <div class="song-details">
+                    <h3>Better</h3>
+                    <p class="artist">ValhallaDSP</p>
+                </div>
+                <audio id="audio-song1" src="assets/Better.mp3"></audio>
+                <button class="song-external" data-audio-id="audio-song1" aria-label="Play/Pause">
+                    <i class="fas fa-play"></i>
+                </button>
+            </div>
+
+            <!-- Beat Card 2 -->
+            <div class="song-card glass-panel" data-song="untitled55">
+                <div class="song-icon"><i class="fas fa-music"></i></div>
+                <div class="song-details">
+                    <h3>untitled55</h3>
+                    <p class="artist">ValhallaDSP</p>
+                </div>
+                <audio id="audio-song2" src="assets/untitled55.mp3"></audio>
+                <button class="song-external" data-audio-id="audio-song2" aria-label="Play/Pause">
+                    <i class="fas fa-play"></i>
+                </button>
+            </div>
+
+            <!-- Beat Card 3 -->
+            <div class="song-card glass-panel" data-song="project_5">
+                <div class="song-icon"><i class="fas fa-music"></i></div>
+                <div class="song-details">
+                    <h3>Project_5</h3>
+                    <p class="artist">ValhallaDSP</p>
+                </div>
+                <audio id="audio-song3" src="assets/Project_5.mp3"></audio>
+                <button class="song-external" data-audio-id="audio-song3" aria-label="Play/Pause">
+                    <i class="fas fa-play"></i>
+                </button>
+            </div>
+
+            <!-- Beat Card 4 -->
+            <div class="song-card glass-panel" data-song="friend">
+                <div class="song-icon"><i class="fas fa-music"></i></div>
+                <div class="song-details">
+                    <h3>friend</h3>
+                    <p class="artist">ValhallaDSP</p>
+                </div>
+                <audio id="audio-song4" src="assets/friend.mp3"></audio>
+                <button class="song-external" data-audio-id="audio-song4" aria-label="Play/Pause">
+                    <i class="fas fa-play"></i>
+                </button>
+            </div>
+        </div>
+    </section>
 
         <!-- CTA Collaboration Section -->
         <section id="cta-section" aria-labelledby="cta-heading" class="section-container cta-block glass-panel">
             <div class="cta-inner">
                 <h2 id="cta-heading">Let's Build Something Exceptional</h2>
-                <p>Have an ambitious web platform or hardware prototype in mind? Let's connect and turn ideas into high-impact reality.</p>
+                <p>Have an idea for a web or hardware project? Let's connect and work on something together.</p>
                 <a href="#contact" class="cta-button primary large">
                     <span>Initiate Contact</span>
                     <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
@@ -454,7 +514,7 @@
         <!-- Contact Section -->
         <section id="contact" aria-labelledby="contact-heading" class="section-container">
             <div class="section-header">
-                <span class="section-tag">09. Connection</span>
+                <span class="section-tag">11. Connection</span>
                 <h2 id="contact-heading">Get In Touch</h2>
             </div>
             <p class="contact-subtext">Direct lines of communication and active developer profiles:</p>
@@ -484,14 +544,14 @@
         </section>
     </main>
 
-    <!-- Site Footer -->
+    <!-- Footer -->
     <footer role="contentinfo">
         <div class="footer-content">
-            <p>&copy; 2026 Jignesh Phalsawal. Engineered with precision, semantic standards, and vanilla JavaScript.</p>
+            <p>&copy; 2026 Jignesh Phalsawal. Built with passion and care.</p>
             <div class="footer-links">
                 <a href="#main-content">Back to Top</a>
                 <span>•</span>
-                <a href="https://github.com/jigneshphalsawal-cloud" target="_blank" rel="noopener noreferrer">Source Repos</a>
+                <a href="https://github.com/jigneshphalsawal-cloud" target="_blank" rel="noopener noreferrer">My Work</a>
             </div>
         </div>
     </footer>
@@ -501,6 +561,8 @@
         <i class="fas fa-arrow-up" aria-hidden="true"></i>
     </button>
 
+    <script src="audio-lab-viz.js" defer></script>
+    <script src="audio-lab.js" defer></script>
     <script src="script.js" defer></script>
 </body>
 </html>
