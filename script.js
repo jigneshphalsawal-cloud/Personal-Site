@@ -1,7 +1,7 @@
 /**
  * Jignesh Phalsawal - Portfolio Interactive Engine
- * Production-grade vanilla JavaScript architecture
- * Features: Command Palette, Terminal Emulator, Canvas Particle Network, GitHub API Integration, Modals & Micro-interactions
+ * Vanilla JavaScript portfolio engine
+ * Features: Command Palette, Terminal Emulator, Particle Canvas, GitHub API, Modals
  */
 
 (function () {
@@ -20,13 +20,13 @@
         PARTICLE_MAX_DIST: 120,
         COMMANDS: [
             { id: 'about', title: 'About Me', desc: 'Jump to biography & background', icon: '👤', href: '#introduction', category: 'Navigation' },
-            { id: 'skills', title: 'Skills & Stack', desc: 'View technical skills and competencies', icon: '⚡', href: '#skills', category: 'Navigation' },
+            { id: 'skills', title: 'Skills', desc: 'What I do across web, hardware, and audio', icon: '⚡', href: '#skills', category: 'Navigation' },,
             { id: 'achievements', title: 'Achievements', desc: 'Awards, recognition & academic honors', icon: '🏆', href: '#achievements', category: 'Navigation' },
             { id: 'projects', title: 'Projects', desc: 'Explore featured engineering projects', icon: '💻', href: '#projects', category: 'Navigation' },
-            { id: 'stats', title: 'Metrics & Stats', desc: 'By the numbers summary', icon: '📊', href: '#stats', category: 'Navigation' },
+            { id: 'stats', title: 'By The Numbers', desc: 'A quick overview', icon: '📊', href: '#stats', category: 'Navigation' },
             { id: 'terminal', title: 'Interactive Terminal', desc: 'Launch browser developer terminal', icon: '⌨️', href: '#terminal', category: 'Tools' },
             { id: 'github', title: 'GitHub Activity', desc: 'View live repository data', icon: '🐙', href: '#github-stats', category: 'Tools' },
-            { id: 'favorites', title: 'Favorite Music', desc: 'Curated playlists and audio tracks', icon: '🎵', href: '#favorites', category: 'Media' },
+            { id: 'audio-lab', title: 'Audio Lab', desc: 'Frequency Canvas synthesizer', icon: '🎛️', href: '#audio-lab', category: 'Media' },
             { id: 'contact', title: 'Get in Touch', desc: 'Contact options and social profiles', icon: '✉️', href: '#contact', category: 'Navigation' },
             { id: 'copy-email', title: 'Copy Email Address', desc: 'Copy jigneshphalsawal@gmail.com', icon: '📋', action: 'copyEmail', category: 'Actions' },
             { id: 'toggle-theme', title: 'Toggle Dark / Light Mode', desc: 'Switch visual color palette', icon: '🌓', action: 'toggleTheme', category: 'Actions' }
@@ -70,7 +70,13 @@
             this.html = document.documentElement;
 
             // Check storage or system preference
-            const savedTheme = localStorage.getItem('theme');
+            let savedTheme = null;
+            try {
+                savedTheme = localStorage.getItem('theme');
+            } catch (e) {
+                // Private browsing or storage disabled
+                console.warn('Could not access localStorage:', e);
+            }
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
 
@@ -97,7 +103,12 @@
                 this.html.classList.remove('dark-mode');
                 if (this.themeToggle) this.themeToggle.innerHTML = '🌙 <span>Dark</span>';
             }
-            localStorage.setItem('theme', theme);
+            try {
+                localStorage.setItem('theme', theme);
+            } catch (e) {
+                // Private browsing or storage disabled
+                console.warn('Theme preference could not be saved:', e);
+            }
         },
         toggle() {
             const current = this.html.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
@@ -207,7 +218,13 @@
             this.input.addEventListener('keydown', (e) => this.handleNavigation(e));
 
             // Initial render
+            // Keep command palette usable without the search UI.
             this.filter('');
+
+            // If the search input is hidden/removed, still let Enter work by
+            // immediately selecting the first command.
+            if (this.input) this.input.style.display = 'none';
+            this.updateSelection();
         },
         isOpen() {
             return this.palette && this.palette.classList.contains('active');
@@ -413,65 +430,94 @@
                         '<span class="t-out">Available terminal commands:</span>',
                         '  <span class="t-accent">help</span>        - Display list of supported commands',
                         '  <span class="t-accent">about</span>       - Brief background and mission statement',
-                        '  <span class="t-accent">skills</span>      - Technical stack and core tools',
+                        '  <span class="t-accent">skills</span>      - What I Do',
                         '  <span class="t-accent">projects</span>    - Featured software and hardware builds',
                         '  <span class="t-accent">github</span>      - Launch GitHub profile repository list',
                         '  <span class="t-accent">contact</span>     - Reach out directly via email or social',
                         '  <span class="t-accent">theme</span>       - Toggle UI dark/light theme',
-                        '  <span class="t-accent">clear</span>       - Wipe terminal output history'
+                        '  <span class="t-accent">clear</span>       - Wipe terminal output history',
+                        '',
+                        '<span class="t-muted">Tip: Click quick command chips above to run commands instantly</span>'
                     ]);
                     break;
 
                 case 'about':
                     this.printLines([
-                        '<span class="t-success">Jignesh Phalsawal</span> - Full Stack Developer & Hardware Tinkerer',
-                        '<span class="t-out">Driven by curiosity at the crossroads of web engineering, embedded systems, and audio tech.</span>',
-                        '<span class="t-muted">Honors: State Topper (2026), Science Olympiad Rank 2.</span>'
+                        '<span class="t-success">Jignesh Phalsawal</span> — Full Stack Developer & Hardware Tinkerer',
+                        '<span class="t-out">I build web apps, embedded systems, and audio tools that feel practical and well-made.</span>',
+                        '',
+                        '<span class="t-muted">Recognized as State Topper (2026).</span>',
+                        '<span class="t-muted">Location: Working on interesting projects.</span>'
                     ]);
                     break;
 
                 case 'skills':
                     this.printLines([
-                        '<span class="t-accent">CORE SKILLSET</span>',
-                        '  Frontend:  HTML5, Modern CSS, ES6+ JavaScript, React',
-                        '  Backend:   Node.js, Express, REST APIs, Python',
-                        '  Hardware:  Arduino, C/C++, Embedded Sensors, DSP Controllers'
+                        '<span class="t-accent">▎ CORE SKILLSET</span>',
+                        '',
+                        '<span class="t-accent">Web:</span>        Web development, functional and clean websites',
+                        '<span class="t-accent">Hardware:</span>   Arduino and embedded systems',
+                        '<span class="t-accent">Audio:</span>      Digital synthesis and audio tools',
+                        '<span class="t-accent">Tinkering:</span>  Learning, making, and fixing',
+                        '',
+                        '<span class="t-muted">Always learning and building new things.</span>'
                     ]);
                     break;
 
                 case 'projects':
                     this.printLines([
-                        '<span class="t-accent">PORTFOLIO BUILDS</span>',
-                        '  1. <span class="t-prompt">astronav</span>       - Interactive Space Data API platform',
-                        '  2. <span class="t-prompt">music-controller</span> - Custom physical rotary/button audio controller'
+                        '<span class="t-accent">▎ PORTFOLIO BUILDS</span>',
+                        '',
+                        '  1. <span class="t-prompt">astronav</span>         - A simple space data tracker I built.',
+                        '     https://github.com/jigneshphalsawal-cloud/astronav',
+                        '',
+                        '  2. <span class="t-prompt">music-controller</span>  - A custom hardware console for audio.',
+                        '',
+                        '<span class="t-muted">More projects available on GitHub → github command</span>'
                     ]);
                     break;
 
                 case 'contact':
                     this.printLines([
-                        '<span class="t-accent">GET IN TOUCH</span>',
-                        '  Email:     <a href="mailto:jigneshphalsawal@gmail.com" class="t-link">jigneshphalsawal@gmail.com</a>',
-                        '  GitHub:    <a href="https://github.com/jigneshphalsawal-cloud" target="_blank" class="t-link">github.com/jigneshphalsawal-cloud</a>',
-                        '  Hack Club: <a href="https://stardance.hackclub.com/@jigneshphalsawal" target="_blank" class="t-link">stardance.hackclub.com/@jigneshphalsawal</a>'
+                        '<span class="t-accent">▎ GET IN TOUCH</span>',
+                        '',
+                        '  <span class="t-accent">Email:</span>     <a href="mailto:jigneshphalsawal@gmail.com" class="t-link">jigneshphalsawal@gmail.com</a>',
+                        '  <span class="t-accent">GitHub:</span>    <a href="https://github.com/jigneshphalsawal-cloud" target="_blank" class="t-link">github.com/jigneshphalsawal-cloud</a>',
+                        '  <span class="t-accent">Hack Club:</span> <a href="https://stardance.hackclub.com/@jigneshphalsawal" target="_blank" class="t-link">stardance.hackclub.com/@jigneshphalsawal</a>',
+                        '',
+                        '<span class="t-muted">Available for collaborations and interesting projects.</span>'
                     ]);
                     break;
 
                 case 'theme':
                     ThemeManager.toggle();
                     const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-                    this.printLine(`<span class="t-success">Switched color theme to: <strong>${currentTheme.toUpperCase()}</strong></span>`);
+                    this.printLine(`<span class="t-success">✨ Switched color theme to: <strong>${currentTheme.toUpperCase()}</strong></span>`);
                     break;
 
                 case 'github':
-                    this.printLine('<span class="t-muted">Navigating to GitHub profile...</span>');
+                    this.printLine('<span class="t-accent">🚀 Opening GitHub profile in new tab...</span>');
                     window.open(`https://github.com/${CONFIG.GITHUB_USERNAME}`, '_blank', 'noopener,noreferrer');
                     break;
 
                 default:
-                    this.printLines([
-                        `<span class="t-warning">Command not found: "${Utils.escapeHTML(rawCmd)}"</span>`,
-                        '<span class="t-muted">Type <span class="t-accent">help</span> for a list of valid commands.</span>'
-                    ]);
+                    // Check if it might be a repo name
+                    const matchingRepo = CONFIG.COMMANDS.find(c =>
+                        c.id === lowerCmd ||
+                        (c.href && c.href.includes(lowerCmd))
+                    );
+
+                    if (matchingRepo) {
+                        this.printLine(`<span class="t-success">Found: ${matchingRepo.title}</span>`);
+                        this.printLine(`<span class="t-muted">Type <span class="t-accent">github</span> to view all repositories.</span>`);
+                    } else {
+                        this.printLines([
+                            `<span class="t-warning">Command not found: "${Utils.escapeHTML(rawCmd)}"</span>`,
+                            '',
+                            '<span class="t-muted">Type <span class="t-accent">help</span> for a list of valid commands.</span>',
+                            '<span class="t-muted">Hint: Try "about", "skills", "projects", "github", or "contact"</span>'
+                        ]);
+                    }
                     break;
             }
 
@@ -522,7 +568,8 @@
             }
 
             try {
-                const response = await fetch(`https://api.github.com/users/${CONFIG.GITHUB_USERNAME}/repos?sort=updated&per_page=6`);
+                // Fetch up to 10 repos to ensure we have enough non-forks
+                const response = await fetch(`https://api.github.com/users/${CONFIG.GITHUB_USERNAME}/repos?sort=updated&per_page=10`);
                 if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
                 const repos = await response.json();
                 this.setCache(repos);
@@ -561,15 +608,16 @@
                 return;
             }
 
-            const filtered = repos.filter(r => !r.fork).slice(0, 4);
+            const filtered = repos.filter(r => !r.fork);
 
-            this.container.innerHTML = filtered.map(repo => `
+            // Render GitHub grid (bottom section max 4)
+            this.container.innerHTML = filtered.slice(0, 4).map(repo => `
                 <a href="${repo.html_url}" class="github-repo-card" target="_blank" rel="noopener noreferrer">
                     <div>
                         <div class="repo-card-top">
                             <span class="repo-card-title"><i class="fab fa-github"></i> ${Utils.escapeHTML(repo.name)}</span>
                         </div>
-                        <p class="repo-card-desc">${Utils.escapeHTML(repo.description || 'Public open-source repository.')}</p>
+                        <p class="repo-card-desc">${Utils.escapeHTML(repo.description || 'Unavailable for this project')}</p>
                     </div>
                     <div class="repo-card-meta">
                         <span class="repo-lang-tag">
@@ -584,13 +632,71 @@
                     </div>
                 </a>
             `).join('');
+
+            // Also render to main Projects section
+            this.renderToProjects(filtered);
+        },
+        renderToProjects(repos) {
+            const projectList = document.querySelector('.project-list');
+            const filterGroup = document.querySelector('.project-filters');
+            if (!projectList) return;
+
+            const existingTitles = Array.from(projectList.querySelectorAll('h3')).map(h3 => h3.textContent.toLowerCase().trim());
+
+            const projectsHTML = repos.map(repo => {
+                if (existingTitles.includes(repo.name.toLowerCase().trim())) return '';
+
+                const desc = repo.description ? Utils.escapeHTML(repo.description) : 'Unavailable for this project';
+                const lang = repo.language ? Utils.escapeHTML(repo.language) : 'Code';
+                const category = 'github';
+
+                return `
+                <article class="card glass-panel reveal-init reveal-active" data-category="${category}">
+                    <div class="card-header">
+                        <h3>${Utils.escapeHTML(repo.name)}</h3>
+                        <span class="status completed"><i class="fas fa-code-branch" aria-hidden="true"></i> GitHub Repo</span>
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag">Open Source</span>
+                        <span class="tag">${lang}</span>
+                    </div>
+                    <p>${desc}</p>
+                    <div class="card-img-wrapper" style="display:flex; align-items:center; justify-content:center; background: #0c1729; border: 1px solid var(--border-glass-subtle);">
+                        <i class="fab fa-github" style="font-size: 5rem; color: var(--border-glass-hover);"></i>
+                    </div>
+                    <div class="card-footer">
+                        <a href="${repo.html_url}" class="project-link" target="_blank" rel="noopener noreferrer">
+                            <span>View Source Code</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </article>`;
+            }).filter(Boolean).join('');
+
+            if (projectsHTML) {
+                // Add filter button if not exists
+                if (filterGroup && !filterGroup.querySelector('[data-filter="github"]')) {
+                    filterGroup.insertAdjacentHTML('beforeend', '<button class="filter-tag" data-filter="github">Open Source (GitHub)</button>');
+                    // Re-init filters logic
+                    Projects.initFilters();
+                }
+
+                // Append newly mapped cards
+                projectList.insertAdjacentHTML('beforeend', projectsHTML);
+
+                // Re-bind modal events and interactions for the new cards
+                Projects.initModals();
+                if (typeof MicroInteractions !== 'undefined' && MicroInteractions.initTilt) {
+                    MicroInteractions.initTilt();
+                }
+            }
         },
         renderFallback() {
             this.container.innerHTML = `
                 <a href="https://github.com/jigneshphalsawal-cloud/astronav" class="github-repo-card" target="_blank" rel="noopener noreferrer">
                     <div>
                         <div class="repo-card-top"><span class="repo-card-title"><i class="fab fa-github"></i> astronav</span></div>
-                        <p class="repo-card-desc">API-based space exploration platform with comprehensive telemetry.</p>
+                        <p class="repo-card-desc">App for tracking and visualizing satellite data.</p>
                     </div>
                     <div class="repo-card-meta">
                         <span class="repo-lang-tag"><span class="repo-lang-dot javascript"></span> JavaScript</span>
@@ -600,7 +706,7 @@
                 <a href="https://github.com/jigneshphalsawal-cloud" class="github-repo-card" target="_blank" rel="noopener noreferrer">
                     <div>
                         <div class="repo-card-top"><span class="repo-card-title"><i class="fab fa-github"></i> portfolio</span></div>
-                        <p class="repo-card-desc">Personal developer portfolio built with glassmorphism UI and interactive terminal.</p>
+                        <p class="repo-card-desc">My portfolio site with a built-in terminal.</p>
                     </div>
                     <div class="repo-card-meta">
                         <span class="repo-lang-tag"><span class="repo-lang-dot html"></span> HTML / CSS</span>
@@ -627,39 +733,12 @@
     // ==========================================
     const Projects = {
         init() {
-            this.filterButtons = document.querySelectorAll('.filter-tag');
-            this.cards = document.querySelectorAll('.card[data-category]');
             this.modal = document.getElementById('projectModal');
             this.closeBtn = document.getElementById('modalClose');
             this.closeBtn2 = document.getElementById('modalCloseBtn');
 
-            // Filtering logic
-            this.filterButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    this.filterButtons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-
-                    const filter = btn.dataset.filter;
-                    this.cards.forEach(card => {
-                        if (filter === 'all' || card.dataset.category === filter) {
-                            card.style.display = '';
-                            setTimeout(() => card.classList.add('reveal-active'), 30);
-                        } else {
-                            card.style.display = 'none';
-                            card.classList.remove('reveal-active');
-                        }
-                    });
-                });
-            });
-
-            // Modal Trigger logic
-            this.cards.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    // Prevent modal when clicking direct links
-                    if (e.target.closest('a')) return;
-                    this.openModal(card);
-                });
-            });
+            this.initFilters();
+            this.initModals();
 
             if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.closeModal());
             if (this.closeBtn2) this.closeBtn2.addEventListener('click', () => this.closeModal());
@@ -676,24 +755,82 @@
                 }
             });
         },
+        initFilters() {
+            const filterButtons = document.querySelectorAll('.filter-tag');
+
+            // Clear old listeners by cloning (if needed, but simple addEventListener is fine if we remove old ones)
+            filterButtons.forEach(btn => {
+                // Ensure we don't bind multiple times, use a marker class
+                if (btn.classList.contains('filter-bound')) return;
+                btn.classList.add('filter-bound');
+
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.dataset.filter;
+                    const cards = document.querySelectorAll('.card[data-category]');
+                    cards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = '';
+                            setTimeout(() => card.classList.add('reveal-active'), 30);
+                        } else {
+                            card.style.display = 'none';
+                            card.classList.remove('reveal-active');
+                        }
+                    });
+                });
+            });
+        },
+        initModals() {
+            const cards = document.querySelectorAll('.card[data-category]');
+            cards.forEach(card => {
+                if (card.classList.contains('modal-bound')) return;
+                card.classList.add('modal-bound');
+
+                card.addEventListener('click', (e) => {
+                    // Prevent modal when clicking direct links
+                    if (e.target.closest('a')) return;
+                    this.openModal(card);
+                });
+            });
+        },
         openModal(card) {
             if (!this.modal) return;
 
             const title = card.querySelector('h3')?.textContent || 'Project';
             const desc = card.querySelector('p')?.textContent || '';
-            const imgSrc = card.querySelector('img')?.src || '';
+            const img = card.querySelector('.card-img-wrapper img');
+            const imgSrc = img ? img.src : '';
             const category = card.dataset.category || 'General';
             const githubLink = card.querySelector('.project-link')?.href || '#';
 
             const modalTitle = document.getElementById('modalTitle');
             const modalDesc = document.getElementById('modalDescription');
             const modalImg = document.getElementById('modalImage');
+            const modalImgContainer = document.querySelector('.modal-image-container');
             const modalCat = document.getElementById('modalCategory');
             const modalGH = document.getElementById('modalGitHubLink');
 
             if (modalTitle) modalTitle.textContent = title;
             if (modalDesc) modalDesc.textContent = desc;
-            if (modalImg) modalImg.src = imgSrc;
+
+            // Handle if there is no image (e.g., dynamically fetched GitHub repo)
+            if (imgSrc) {
+                if (modalImg) {
+                    modalImg.src = imgSrc;
+                    modalImg.style.display = 'block';
+                }
+                modalImgContainer.style.background = '#000000';
+                modalImgContainer.innerHTML = '<img src="' + imgSrc + '" alt="" class="modal-image" id="modalImage">';
+            } else {
+                modalImgContainer.style.background = '#0c1729';
+                modalImgContainer.style.display = 'flex';
+                modalImgContainer.style.alignItems = 'center';
+                modalImgContainer.style.justifyContent = 'center';
+                modalImgContainer.innerHTML = '<i class="fab fa-github" style="font-size: 6rem; color: rgba(255, 255, 255, 0.1);"></i>';
+            }
+
             if (modalCat) modalCat.textContent = category.toUpperCase();
             if (modalGH) modalGH.href = githubLink;
 
@@ -767,6 +904,7 @@
             this.ctx = this.canvas.getContext('2d');
             this.particles = [];
             this.mouse = { x: null, y: null, radius: 100 };
+            this.animationId = null;
 
             this.resize();
             window.addEventListener('resize', Utils.debounce(() => this.resize(), 150));
@@ -841,7 +979,14 @@
                 }
             }
 
-            requestAnimationFrame(() => this.animate());
+            this.animationId = requestAnimationFrame(() => this.animate());
+        },
+
+        destroy() {
+            if (this.animationId) {
+                cancelAnimationFrame(this.animationId);
+                this.animationId = null;
+            }
         }
     };
 
@@ -931,6 +1076,57 @@
     };
 
     // ==========================================
+    // 11. MyBeats Controller
+    // ==========================================
+    const MyBeatsController = {
+        init() {
+            this.containerEl = document.getElementById('my-beats');
+            if (!this.containerEl) return;
+
+            this.buttons = this.containerEl.querySelectorAll('.song-external');
+            if (!this.buttons || this.buttons.length === 0) return;
+
+            this.buttons.forEach((btn) => {
+                const audioId = btn.dataset.audioId || btn.getAttribute('data-audio-id');
+                if (!audioId) return;
+
+                const audioEl = document.getElementById(audioId);
+                if (!audioEl) return;
+
+                // Initialize button icon based on current paused state.
+                const setPlayingUI = (isPlaying) => {
+                    btn.classList.toggle('active', isPlaying);
+                    btn.innerHTML = isPlaying
+                        ? '<i class="fas fa-pause"></i>'
+                        : '<i class="fas fa-play"></i>';
+                };
+
+                setPlayingUI(!audioEl.paused);
+
+                audioEl.addEventListener('ended', () => setPlayingUI(false));
+                audioEl.addEventListener('pause', () => setPlayingUI(false));
+
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const lab = window.AudioLab;
+                    if (!lab || typeof lab.playExternalSong !== 'function') return;
+
+                    const shouldPlay = audioEl.paused || audioEl.ended;
+                    if (shouldPlay) {
+                        lab.playExternalSong(audioEl);
+                        setPlayingUI(true);
+                    } else {
+                        lab.stopExternalSong(audioEl);
+                        setPlayingUI(false);
+                    }
+                });
+            });
+        }
+    };
+
+    // ==========================================
     // Master Application Bootstrap
     // ==========================================
     function initializeApp() {
@@ -944,6 +1140,7 @@
         ParticleNetwork.init();
         ScrollReveal.init();
         MicroInteractions.init();
+        MyBeatsController.init();
     }
 
     if (document.readyState === 'loading') {
