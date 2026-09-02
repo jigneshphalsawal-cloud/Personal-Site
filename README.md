@@ -1,6 +1,6 @@
 # Jignesh Phalsawal - Portfolio
 
-This is my personal portfolio. I built this to showcase the web projects, hardware builds, and audio tools I've been working on.
+This is my personal portfolio. I built this to showcase the web projects, hardware builds, and audio tools I've been working on. I used AI to debug errors and understand for this project to understand some concepts while building Audio visualizer and Live Github api data engine
 
 ## About
 I'm a developer and maker who enjoys exploring how software and hardware can work together. I built this site to keep track of my projects and experiments.
